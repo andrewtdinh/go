@@ -47,5 +47,6 @@ func createEvent(w http.ResponseWriter, r *http.Request) {
 func main() {
 	router := mux.NewRouter().StrictSlash(true)
 	router.HandleFunc("/", homeLink)
+	router.HandleFunc("/event", createEvent).Methods("POST")
 	log.Fatal(http.ListenAndServe(":8082", router))
 }
