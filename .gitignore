@@ -12,7 +12,8 @@
 *.out
 *.pkg
 */pkg
+*/pkg/
 pkg
-*/gorilla
+gorilla/
 
 
