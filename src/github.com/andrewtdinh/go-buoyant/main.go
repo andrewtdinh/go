@@ -27,7 +27,7 @@ func homeLink(w http.ResponseWriter, r *http.Request) {
 }
 
 func printEndpoint(w http.ResponseWriter, r *http.Request) {
-	var newEvent event
+	var newRequest request
 	reqBody, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		fmt.Fprintf(w, "Kindly enter data with the event title and description only in order to update")
