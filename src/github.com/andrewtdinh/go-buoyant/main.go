@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/http"
 
@@ -24,30 +23,13 @@ func homeLink(w http.ResponseWriter, r *http.Request) {
 
 func printEndpoint(w http.ResponseWriter, r *http.Request) {
 	var newRequest request
-	reqBody, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		fmt.Fprintf(w, "Kindly enter data with the event title and description only in order to update")
-	}
-
-	json.Unmarshal(reqBody, &newEvent)
-	events = append(events, newEvent)
-	w.WriteHeader(http.StatusCreated)
-
-	json.NewEncoder(w).Encode(newEvent)
+	newRequest["Endpoint"] := r.URL.Path
+	fmt.Fprintf(w, "%+v\n", newRequest)
+	requests = append(requests, newRequest)
 }
 
 func getAllRequests(w http.ResponseWriter, r *http.Request) {
-	var newRequest request
-	reqBody, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		fmt.Fprintf(w, "Kindly enter data with the event title and description only in order to update")
-	}
-
-	json.Unmarshal(reqBody, &newEvent)
-	events = append(events, newEvent)
-	w.WriteHeader(http.StatusCreated)
-
-	json.NewEncoder(w).Encode(newEvent)
+	json.NewEncoder(w).Encode(requests)
 }
 
 func main() {
@@ -56,5 +38,7 @@ func main() {
 	router.HandleFunc("/requests", getAllRequests)
 	router.HandleFunc("/books", printEndpoint).Methods("GET")
 	router.HandleFunc("/books/{id: [0-9]+}", printEndpoint).Methods("GET")
+	router.HandleFunc("/books/new", printEndpoint).Methods("GET")
+	router.HandleFunc("/books/{id: [0-9]+}/edit", printEndpoint).Methods("GET")
 	log.Fatal(http.ListenAndServe(":8082", router))
 }
