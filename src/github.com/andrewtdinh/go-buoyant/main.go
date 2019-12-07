@@ -9,27 +9,24 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type request struct {
-	Endpoint string `json:"Endpoint"`
-}
+// type request string
 
-type allRequests []request
+var allRequests []string
 
-var requests = allRequests{}
+// var requests = allRequests
 
 func homeLink(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "/")
 }
 
 func printEndpoint(w http.ResponseWriter, r *http.Request) {
-	var newRequest request
-	path := r.URL.Path
-	fmt.Fprintf(w, "%v\n", path)
-	requests = append(requests, newRequest)
+	newRequest := r.URL.Path
+	fmt.Fprintf(w, "%v\n", newRequest)
+	allRequests = append(allRequests, newRequest)
 }
 
 func getAllRequests(w http.ResponseWriter, r *http.Request) {
-	json.NewEncoder(w).Encode(requests)
+	json.NewEncoder(w).Encode(allRequests)
 }
 
 func main() {
