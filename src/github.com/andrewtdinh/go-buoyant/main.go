@@ -9,11 +9,7 @@ import (
 	"github.com/gorilla/mux"
 )
 
-// type request string
-
 var allRequests []string
-
-// var requests = allRequests
 
 func homeLink(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "/")
