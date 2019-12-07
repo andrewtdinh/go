@@ -23,8 +23,8 @@ func homeLink(w http.ResponseWriter, r *http.Request) {
 
 func printEndpoint(w http.ResponseWriter, r *http.Request) {
 	var newRequest request
-	newRequest["Endpoint"] := r.URL.Path
-	fmt.Fprintf(w, "%+v\n", newRequest)
+	path := r.URL.Path
+	fmt.Fprintf(w, "%+v\n", path)
 	requests = append(requests, newRequest)
 }
 
